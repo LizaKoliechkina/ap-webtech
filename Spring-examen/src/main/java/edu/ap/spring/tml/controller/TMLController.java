@@ -64,4 +64,20 @@ public class TMLController {
 
 	   return "searchRecipe";
    }
+	
+  @PostMapping ("/search")
+  public String findRecipe (@RequestParam ("name") String name,
+                              Model model) {
+
+           ArrayList<String> recipes = new ArrayList<String>();
+           for(String a : this.service.keys("recipe:"+ name + ":*")) {
+               recipes.add(this.service.getKey(a));
+           }
+
+           model.addAttribute("recipes", recipes);
+           model.addAttribute("name", name);
+           return "recipeByName";
+
+
+   }
 }
